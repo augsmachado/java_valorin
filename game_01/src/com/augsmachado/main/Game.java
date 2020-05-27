@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import com.augsmachado.entities.Player;
 import com.augsmachado.graphics.Spritesheet;
 
 
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable, KeyListener {
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -31,9 +33,12 @@ public class Game extends Canvas implements Runnable{
 	
 	public List<Entity> entities;
 	public Spritesheet spritesheet;
+	
+	private Player player;
 
 	
 	public Game() {
+		this.addKeyListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
 		initFrame();
 		
@@ -42,12 +47,12 @@ public class Game extends Canvas implements Runnable{
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		
-		Player player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
+		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
 	}
 	
 	public void initFrame() {
-		frame = new JFrame("Game #1");
+		frame = new JFrame("Valorin");
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
@@ -77,7 +82,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void tick() {
-		for(int i = 0; i < entities.size(); i++) {
+		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.tick();
 		}
@@ -100,7 +105,7 @@ public class Game extends Canvas implements Runnable{
 		/* Renderizaçao do jogo */
 		//Graphics2D g2 = (Graphics2D) g;
 		
-		for(int i = 0; i < entities.size(); i++) {
+		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.render(g);
 		}
@@ -123,7 +128,8 @@ public class Game extends Canvas implements Runnable{
 		double timer = System.currentTimeMillis(); // retorna o tempo em uma medidad menos precisa
 		
 		
-		while(isRunning) {
+		while (isRunning) {
+			requestFocus();
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -136,12 +142,53 @@ public class Game extends Canvas implements Runnable{
 			}
 			
 			// calcula frames por segundo
-			if(System.currentTimeMillis() - timer >= 1000) {
+			if (System.currentTimeMillis() - timer >= 1000) {
 				System.out.println("FPS: "+ frames);
 				frames = 0;
 				timer += 1000;
 			}
 		}
+	}
+
+	
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// Control of sprite's movement when key pressed
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = true;
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = true;
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			player.up = true;
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			player.down = true;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// Control of sprite's movement when key released
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = false;
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = false;
+		}
+				
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			player.up = false;
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			player.down = false;
+		}
+		
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+		
 	}
 
 }
