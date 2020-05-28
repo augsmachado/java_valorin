@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import com.augsmachado.entities.Entity;
 import com.augsmachado.entities.Player;
 import com.augsmachado.graphics.Spritesheet;
+import com.augsmachado.world.World;
 
 
 public class Game extends Canvas implements Runnable, KeyListener {
@@ -34,6 +35,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public List<Entity> entities;
 	public static Spritesheet spritesheet;
 	
+	public static World world;
+	
 	private Player player;
 
 	
@@ -43,6 +46,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		initFrame();
 		
 		// Start objects
+		world = new World("/map.png");
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
@@ -98,7 +102,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		// background black
 		Graphics g = image.getGraphics();
-		g.setColor(new Color(0,0,0));
+		g.setColor(new Color(0,255,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		
