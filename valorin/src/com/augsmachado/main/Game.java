@@ -46,10 +46,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		initFrame();
 		
 		// Start objects
-		world = new World("/map.png");
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		spritesheet = new Spritesheet("/spritesheet.png");
+		world = new World("/map.png");
 		
 		player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
@@ -100,14 +100,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			return;
 		}
 		
-		// background black
+		// Black background
 		Graphics g = image.getGraphics();
-		g.setColor(new Color(0,255,0));
+		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		
-		/* Renderizaçao do jogo */
+		/* Game rendering */
 		//Graphics2D g2 = (Graphics2D) g;
+		world.render(g);
 		
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
@@ -122,14 +123,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		bs.show();
 	}
 	
-	// game loop profissional
+	// Professional game loop
 	public void run() {
-		long lastTime = System.nanoTime(); // pega o tempo do pc em nanosegundos
+		long lastTime = System.nanoTime(); // PC time on nanoseconds
 		double  amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;  // frames por segundo
+		double ns = 1000000000 / amountOfTicks;  // Frames per second
 		double delta = 0;
 		int frames = 0;
-		double timer = System.currentTimeMillis(); // retorna o tempo em uma medidad menos precisa
+		double timer = System.currentTimeMillis(); // Returns time in less accurate measure
 		
 		
 		while (isRunning) {
@@ -153,8 +154,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			}
 		}
 	}
-
-	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
