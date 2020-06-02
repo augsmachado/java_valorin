@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.augsmachado.main.Game;
+import com.augsmachado.world.Camera;
 
 public class Player extends Entity{
 	
@@ -60,16 +61,20 @@ public class Player extends Entity{
 		// Player animation
 		if (moved) {
 			frames++;
-			System.out.println(frames);
 			if (frames == maxFrames) {
 				frames = 0;
 				index++;
-				System.out.println(index);
 				if(index > maxIndex) {
 					index = 0;
 				}
 			}
 		}
+		
+		// Camera focus on the player
+		Camera.X = this.getX() - (Game.WIDTH/2);
+		Camera.Y = this.getY() - (Game.HEIGHT/2);
+		
+		
 	}
 	
 	@Override
@@ -77,9 +82,9 @@ public class Player extends Entity{
 		
 		// Change the sprite's orientation
 		if (dir == rightDir) {
-			g.drawImage(rightPlayer[index], this.getX(),this.getY(), null);
+			g.drawImage(rightPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
 		} else if (dir == leftDir) {
-			g.drawImage(leftPlayer[index], this.getX(),this.getY(), null);
+			g.drawImage(leftPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
 		}
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.augsmachado.main.Game;
+import com.augsmachado.world.Camera;
 
 public class Entity {
 	
@@ -58,6 +59,6 @@ public class Entity {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(sprite, (int) x, (int) y, height, width, null);
+		g.drawImage(sprite, this.getX() - Camera.X, this.getY() - Camera.Y, height, width, null);
 	}
 }
