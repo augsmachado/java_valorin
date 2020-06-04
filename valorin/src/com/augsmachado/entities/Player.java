@@ -41,20 +41,20 @@ public class Player extends Entity{
 		moved = false;
 		
 		// Player moves according key pressed
-		if (right) {
+		if (right && World.isFree((int) (x + speed), this.getY())){
 			moved = true;
 			dir = rightDir;
 			x += speed;
-		} else if (left) {
+		} else if (left && World.isFree((int) (x - speed), this.getY())) {
 			moved = true;
 			dir = leftDir;
 			x -= speed;
 		}
 		
-		if (up) {
+		if (up && World.isFree(this.getX(), (int) (y - speed))) {
 			moved = true;
 			y -= speed;
-		} else if (down) {
+		} else if (down && World.isFree(this.getX(), (int) (y + speed))) {
 			moved = true;
 			y += speed;
 		}
