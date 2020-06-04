@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.augsmachado.main.Game;
 import com.augsmachado.world.Camera;
+import com.augsmachado.world.World;
 
 public class Player extends Entity{
 	
@@ -71,8 +72,8 @@ public class Player extends Entity{
 		}
 		
 		// Camera focus on the player
-		Camera.X = this.getX() - (Game.WIDTH/2);
-		Camera.Y = this.getY() - (Game.HEIGHT/2);
+		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * 16) - Game.WIDTH);
+		Camera.Y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, (World.HEIGHT * 16) - Game.HEIGHT);
 		
 		
 	}

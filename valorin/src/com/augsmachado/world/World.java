@@ -6,8 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.augsmachado.entities.*;
-
+import com.augsmachado.entities.Bullet;
+import com.augsmachado.entities.Enemy;
+import com.augsmachado.entities.Entity;
+import com.augsmachado.entities.Lifepack;
+import com.augsmachado.entities.Weapon;
 import com.augsmachado.main.Game;
 
 public class World {
@@ -78,8 +81,20 @@ public class World {
 	
 	
 	public void render(Graphics g) {
-		for (int xx = 0; xx < WIDTH; xx++) {
-			for (int yy = 0; yy < HEIGHT; yy++) {
+		
+		// Render only a part of map
+		int xStart = Camera.X >> 4;
+		int yStart = Camera.Y >> 4;
+		
+		int xFinal = xStart + (Game.WIDTH >> 4);
+		int yFinal = yStart + (Game.HEIGHT >> 4);
+		
+		for (int xx = xStart; xx <= xFinal; xx++) {
+			for (int yy = yStart; yy <= yFinal; yy++) {
+				
+				// Case negative index to camera
+				if(xx < 0 || yy < 0 || xx >= WIDTH || yy >= HEIGHT) continue;
+				
 				Tile tile = tiles[xx + (yy* WIDTH)];
 				tile.render(g);
 			}
