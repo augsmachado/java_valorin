@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -40,9 +41,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static World world;
 	
 	public static Player player;
+	
+	public static Random rand;
 
 	
 	public Game() {
+		rand = new Random();
+		
 		this.addKeyListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
 		initFrame();
@@ -108,7 +113,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		
-		/* Game rendering */
+		// Game rendering
 		//Graphics2D g2 = (Graphics2D) g;
 		world.render(g);
 		
@@ -148,7 +153,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				delta--;
 			}
 			
-			// calcula frames por segundo
+			// Calculate the frames per second
 			if (System.currentTimeMillis() - timer >= 1000) {
 				System.out.println("FPS: "+ frames);
 				frames = 0;
