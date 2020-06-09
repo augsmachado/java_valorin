@@ -39,37 +39,39 @@ public class World {
 					int currentPixel = pixels[xx + (yy * WIDTH)];
 					
 					// Everyone is floor
-					tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);
+					tiles[xx + (yy * WIDTH)] = new FloorTile(xx * TILE_SIZE, yy * TILE_SIZE, Tile.TILE_FLOOR);
 					
 					
 					if (currentPixel == 0xFF000000) {
 						// floor
-						tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);
+						tiles[xx + (yy * WIDTH)] = new FloorTile(xx * TILE_SIZE, yy * TILE_SIZE, Tile.TILE_FLOOR);
 						
 					} else if (currentPixel == 0xFFFFFFFF) {
 						// wall
-						tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_WALL);
+						tiles[xx + (yy * WIDTH)] = new WallTile(xx * TILE_SIZE, yy * TILE_SIZE, Tile.TILE_WALL);
 					
 					} else if (currentPixel == 0xFF0026FF) {
 						// player
-						Game.player.setX(xx * 16);
-						Game.player.setY(yy * 16);
+						Game.player.setX(xx * TILE_SIZE);
+						Game.player.setY(yy * TILE_SIZE);
 					
 					} else if (currentPixel == 0xFFFF0000){
 						// enemy
-						Game.entities.add(new Enemy(xx * 16, yy * 16, 16, 16, Entity.ENEMY_EN));
-					
+						Enemy en = new Enemy(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.ENEMY_EN);
+						Game.entities.add(en);
+						Game.enemies.add(en);
+						
 					}  else if (currentPixel == 0xFFFF6A00) {
 						// weapon
-						Game.entities.add(new Weapon(xx * 16, yy * 16, 16, 16, Entity.WEAPON_EN));
+						Game.entities.add(new Weapon(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.WEAPON_EN));
 						
 					} else if (currentPixel == 0xFF4CFF00) {
 						// life pack
-						Game.entities.add(new Lifepack(xx * 16, yy * 16, 16, 16, Entity.LIFEPACK_EN));
+						Game.entities.add(new Lifepack(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.LIFEPACK_EN));
 						
 					}  else if (currentPixel == 0xFFFFD800) {
 						// bullet
-						Game.entities.add(new Bullet(xx * 16, yy * 16, 16, 16, Entity.BULLET_EN));
+						Game.entities.add(new Bullet(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.BULLET_EN));
 					}
 				}
 			}

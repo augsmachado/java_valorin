@@ -21,6 +21,8 @@ public class Player extends Entity{
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	
+	public static final int PLAYER_SIZE = 16;
+	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
@@ -28,11 +30,11 @@ public class Player extends Entity{
 		leftPlayer = new BufferedImage[4];
 		
 		for(int i = 0; i < 4; i++) {
-			rightPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 0, 16, 16);
+			rightPlayer[i] = Game.spritesheet.getSprite(32 + (i * PLAYER_SIZE), 0, PLAYER_SIZE, PLAYER_SIZE);
 		}
 		
 		for(int i = 0; i < 4; i++) {
-			leftPlayer[i] = Game.spritesheet.getSprite(32 + (i * 16), 16, 16, 16);
+			leftPlayer[i] = Game.spritesheet.getSprite(32 + (i * PLAYER_SIZE), PLAYER_SIZE, PLAYER_SIZE, PLAYER_SIZE);
 		}
 		
 	}
@@ -72,8 +74,8 @@ public class Player extends Entity{
 		}
 		
 		// Camera focus on the player
-		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * 16) - Game.WIDTH);
-		Camera.Y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, (World.HEIGHT * 16) - Game.HEIGHT);
+		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * PLAYER_SIZE) - Game.WIDTH);
+		Camera.Y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, (World.HEIGHT * PLAYER_SIZE) - Game.HEIGHT);
 		
 		
 	}
