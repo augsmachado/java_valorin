@@ -23,6 +23,8 @@ public class Player extends Entity{
 	
 	public static final int PLAYER_SIZE = 16;
 	
+	public int life = 100;
+	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
