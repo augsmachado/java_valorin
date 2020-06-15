@@ -18,6 +18,7 @@ import com.augsmachado.entities.Enemy;
 import com.augsmachado.entities.Entity;
 import com.augsmachado.entities.Player;
 import com.augsmachado.graphics.Spritesheet;
+import com.augsmachado.graphics.UI;
 import com.augsmachado.world.World;
 
 
@@ -41,10 +42,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Spritesheet spritesheet;
 	
 	public static World world;
-	
 	public static Player player;
-	
 	public static Random rand;
+	public UI ui;
 
 	
 	public Game() {
@@ -55,6 +55,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		initFrame();
 		
 		// Start objects
+		ui = new UI();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
@@ -124,7 +125,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			Entity e = entities.get(i);
 			e.render(g);
 		}
-		
+		ui.render(g);
 		
 		/* */
 		g.dispose();
