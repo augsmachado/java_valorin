@@ -43,34 +43,35 @@ public class World {
 					
 					
 					if (currentPixel == 0xFF000000) {
-						// floor
+						// floor => color: Black
 						tiles[xx + (yy * WIDTH)] = new FloorTile(xx * TILE_SIZE, yy * TILE_SIZE, Tile.TILE_FLOOR);
 						
 					} else if (currentPixel == 0xFFFFFFFF) {
-						// wall
+						// wall => color: White
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx * TILE_SIZE, yy * TILE_SIZE, Tile.TILE_WALL);
 					
 					} else if (currentPixel == 0xFF0026FF) {
-						// player
+						// player => color: Blue
 						Game.player.setX(xx * TILE_SIZE);
 						Game.player.setY(yy * TILE_SIZE);
 					
 					} else if (currentPixel == 0xFFFF0000){
-						// enemy
+						// enemy => color: Red
 						Enemy en = new Enemy(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.ENEMY_EN);
 						Game.entities.add(en);
 						Game.enemies.add(en);
 						
 					}  else if (currentPixel == 0xFFFF6A00) {
-						// weapon
+						// weapon => color: Orange
 						Game.entities.add(new Weapon(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.WEAPON_EN));
 						
 					} else if (currentPixel == 0xFF4CFF00) {
-						// life pack
-						Game.entities.add(new Lifepack(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.LIFEPACK_EN));
+						// life pack => color: Green
+						Lifepack pack = new Lifepack(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.LIFEPACK_EN);
+						Game.entities.add(pack);
 						
 					}  else if (currentPixel == 0xFFFFD800) {
-						// bullet
+						// bullet => color: Yellow
 						Game.entities.add(new Bullet(xx * TILE_SIZE, yy * TILE_SIZE, TILE_SIZE, TILE_SIZE, Entity.BULLET_EN));
 					}
 				}

@@ -75,12 +75,30 @@ public class Player extends Entity{
 			}
 		}
 		
+		this.checkCollisionLife();
+		
 		// Camera focus on the player
 		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * PLAYER_SIZE) - Game.WIDTH);
 		Camera.Y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, (World.HEIGHT * PLAYER_SIZE) - Game.HEIGHT);
 		
 		
 	}
+	
+	
+	public void checkCollisionLife() {
+		for (int i = 0; i < Game.entities.size(); i++) {
+			Entity e = Game.entities.get(i);
+			if (e instanceof Lifepack) {
+				if (Entity.isCollinding(this, e) ) {
+					life += 100;
+					if (life >= 100) life = 100;
+					Game.entities.remove(i);
+					return;
+				}
+			}
+		}
+	}
+	
 	
 	@Override
 	public void render(Graphics g) {
