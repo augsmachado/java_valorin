@@ -74,6 +74,7 @@ public class Entity {
 		
 	}
 	
+	// Collision between entities
 	public static boolean isCollinding(Entity e1, Entity e2) {
 		Rectangle e1Mask = new Rectangle(e1.getX() + e1.maskx, e1.getY() + e1.masky, e1.mWidth, e1.mHeight);
 		Rectangle e2Mask = new Rectangle(e2.getX() + e2.maskx, e2.getY() + e2.masky, e2.mWidth, e2.mHeight);

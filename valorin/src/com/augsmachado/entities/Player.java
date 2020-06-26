@@ -11,19 +11,20 @@ public class Player extends Entity{
 	
 	public boolean right, left, up, down;
 	public double speed = 1.4;
-	
 	public int rightDir = 0, leftDir = 1;
 	public int dir = rightDir;
+	public int ammo = 0;
 	
 	private int frames = 0, maxFrames = 5, index = 0, maxIndex = 3;
 	private boolean moved = false;
-	
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	
-	public static final int PLAYER_SIZE = 16;
 	
+	public static final int PLAYER_SIZE = 16;
 	public static double life = 100, maxLife = 100;
+	
+	
 	
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -75,7 +76,8 @@ public class Player extends Entity{
 			}
 		}
 		
-		this.checkCollisionLife();
+		this.checkCollisionLifePack();
+		this.checkCollisionAmmo();
 		
 		// Camera focus on the player
 		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * PLAYER_SIZE) - Game.WIDTH);
@@ -84,8 +86,20 @@ public class Player extends Entity{
 		
 	}
 	
+	public void checkCollisionAmmo() {
+		for (int i = 0; i < Game.entities.size(); i++) {
+			Entity e = Game.entities.get(i);
+			if (e instanceof Bullet) {
+				if (Entity.isCollinding(this, e) ) {
+					ammo += 10;
+					Game.entities.remove(i);
+					return;
+				}
+			}
+		}
+	}
 	
-	public void checkCollisionLife() {
+	public void checkCollisionLifePack() {
 		for (int i = 0; i < Game.entities.size(); i++) {
 			Entity e = Game.entities.get(i);
 			if (e instanceof Lifepack) {
