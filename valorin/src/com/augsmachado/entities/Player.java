@@ -2,7 +2,9 @@ package com.augsmachado.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import com.augsmachado.graphics.Spritesheet;
 import com.augsmachado.main.Game;
 import com.augsmachado.world.Camera;
 import com.augsmachado.world.World;
@@ -15,11 +17,14 @@ public class Player extends Entity{
 	public int dir = rightDir;
 	public int ammo = 0;
 	
+	public boolean isDamaged = false;
+	private int damageFrames = 0;
+	
 	private int frames = 0, maxFrames = 5, index = 0, maxIndex = 3;
 	private boolean moved = false;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
-	
+	private BufferedImage playerDamage;
 	
 	public static final int PLAYER_SIZE = 16;
 	public static double life = 100, maxLife = 100;
@@ -31,6 +36,7 @@ public class Player extends Entity{
 		
 		rightPlayer = new BufferedImage[4];
 		leftPlayer = new BufferedImage[4];
+		playerDamage = Game.spritesheet.getSprite(0, 16, 16, 16);
 		
 		for(int i = 0; i < 4; i++) {
 			rightPlayer[i] = Game.spritesheet.getSprite(32 + (i * PLAYER_SIZE), 0, PLAYER_SIZE, PLAYER_SIZE);
@@ -79,6 +85,28 @@ public class Player extends Entity{
 		this.checkCollisionLifePack();
 		this.checkCollisionAmmo();
 		
+		// When player collides, he blinks to show damage
+		if (isDamaged) {
+			this.damageFrames++;
+			if (this.damageFrames == 10) {
+				this.damageFrames  = 0;
+				isDamaged = false;
+			}
+			
+		}
+		
+		// Game over
+		if(Player.life <= 0) {
+			Game.entities = new ArrayList<Entity>();
+			Game.enemies = new ArrayList<Enemy>();
+			Game.spritesheet = new Spritesheet("/spritesheet.png");
+			Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+			Game.entities.add(Game.player);
+			Game.world = new World("/map.png");
+			life = 100;
+			return;
+		}
+		
 		// Camera focus on the player
 		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * PLAYER_SIZE) - Game.WIDTH);
 		Camera.Y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, (World.HEIGHT * PLAYER_SIZE) - Game.HEIGHT);
@@ -116,12 +144,19 @@ public class Player extends Entity{
 	
 	@Override
 	public void render(Graphics g) {
-		
-		// Change the sprite's orientation
-		if (dir == rightDir) {
-			g.drawImage(rightPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
-		} else if (dir == leftDir) {
-			g.drawImage(leftPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
+		if (!isDamaged) {
+			// Change the sprite's orientation
+			if (dir == rightDir) {
+				g.drawImage(rightPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
+			} else if (dir == leftDir) {
+				g.drawImage(leftPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
+			}
+		} else {
+			// When player is wholesale
+			g.drawImage(playerDamage, this.getX() - Camera.X, this.getY() - Camera.Y, null);
 		}
+		
+		
+		
 	}
 }

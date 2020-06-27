@@ -134,9 +134,19 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
 		
 		// Show the number of the collected bullets in ammo
+		//g.setFont(new Font("arial", Font.BOLD, 20));
+		//g.setColor(Color.WHITE);
+		//g.drawString("Ammo: " + player.ammo, 600, 40);
+		
+		// Player's lives score using numbers
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("arial", Font.BOLD, 20));
+		g.drawString((int) Player.life +"/"+ (int) Player.maxLife, 35, 38);
+				
+		// Show the number of the collected bullets in ammo
 		g.setFont(new Font("arial", Font.BOLD, 20));
 		g.setColor(Color.WHITE);
-		g.drawString("Ammo: " + player.ammo, 600, 40);
+		g.drawString("Ammo: " + Game.player.ammo, 600, 38);
 		
 		
 		bs.show();

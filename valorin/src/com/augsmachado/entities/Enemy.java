@@ -52,11 +52,7 @@ public class Enemy extends Entity{
 			// Player is colliding with enemy, then lose lives
 			if (Game.rand.nextInt(100) < 10) {
 				Player.life -= Game.rand.nextInt(5) ;
-				System.out.println("Vida: " + Player.life);
-				
-				if(Player.life <= 0) {
-					System.exit(1);
-				}
+				Game.player.isDamaged = true;
 			}
 		}
 		
