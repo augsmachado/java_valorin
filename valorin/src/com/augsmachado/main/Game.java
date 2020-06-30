@@ -132,11 +132,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
-		
-		// Show the number of the collected bullets in ammo
-		//g.setFont(new Font("arial", Font.BOLD, 20));
-		//g.setColor(Color.WHITE);
-		//g.drawString("Ammo: " + player.ammo, 600, 40);
+
 		
 		// Player's lives score using numbers
 		g.setColor(Color.WHITE);
@@ -187,15 +183,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// Control of sprite's movement when key pressed
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			player.right = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			player.left = true;
 		}
 		
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 			player.up = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = true;
 		}
 	}
@@ -203,15 +199,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// Control of sprite's movement when key released
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			player.right = false;
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			player.left = false;
 		}
-				
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
+		
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
 			player.up = false;
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = false;
 		}
 		

@@ -11,7 +11,7 @@ import com.augsmachado.world.World;
 
 public class Player extends Entity{
 	
-	public boolean right, left, up, down;
+	public boolean right = false, left = false, up = false, down = false;
 	public double speed = 1.4;
 	public int rightDir = 0, leftDir = 1;
 	public int dir = rightDir;
@@ -25,6 +25,7 @@ public class Player extends Entity{
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	private BufferedImage playerDamage;
+	private boolean hasGun = false;
 	
 	public static final int PLAYER_SIZE = 16;
 	public static double life = 100, maxLife = 100;
@@ -84,6 +85,7 @@ public class Player extends Entity{
 		
 		this.checkCollisionLifePack();
 		this.checkCollisionAmmo();
+		this.checkCollisionGun();
 		
 		// When player collides, he blinks to show damage
 		if (isDamaged) {
@@ -111,7 +113,6 @@ public class Player extends Entity{
 		Camera.X = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, (World.WIDTH * PLAYER_SIZE) - Game.WIDTH);
 		Camera.Y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, (World.HEIGHT * PLAYER_SIZE) - Game.HEIGHT);
 		
-		
 	}
 	
 	public void checkCollisionAmmo() {
@@ -120,6 +121,19 @@ public class Player extends Entity{
 			if (e instanceof Bullet) {
 				if (Entity.isCollinding(this, e) ) {
 					ammo += 10;
+					Game.entities.remove(i);
+					return;
+				}
+			}
+		}
+	}
+	
+	public void checkCollisionGun() {
+		for (int i = 0; i < Game.entities.size(); i++) {
+			Entity e = Game.entities.get(i);
+			if (e instanceof Weapon) {
+				if (Entity.isCollinding(this, e) ) {
+					hasGun = true;
 					Game.entities.remove(i);
 					return;
 				}
@@ -147,9 +161,19 @@ public class Player extends Entity{
 		if (!isDamaged) {
 			// Change the sprite's orientation
 			if (dir == rightDir) {
-				g.drawImage(rightPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
+				g.drawImage(rightPlayer[index], this.getX() - Camera.X, this.getY() - Camera.Y, null);
+				
+				// Draw gun to right
+				if (hasGun) {
+					g.drawImage(Entity.GUN_RIGHT, this.getX() - Camera.X +5, this.getY() - Camera.Y, null);
+				}
 			} else if (dir == leftDir) {
-				g.drawImage(leftPlayer[index], this.getX() - Camera.X,this.getY() - Camera.Y, null);
+				g.drawImage(leftPlayer[index], this.getX() - Camera.X, this.getY() - Camera.Y, null);
+				
+				// Draw gun to left
+				if (hasGun) {
+					g.drawImage(Entity.GUN_LEFT, this.getX() - Camera.X -5, this.getY() - Camera.Y, null);
+				}
 			}
 		} else {
 			// When player is wholesale
